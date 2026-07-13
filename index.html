@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蓝海海洋 · 小海缸开缸教程</title>
+<style>
+  :root {
+    --deep: #0a1628;
+    --ocean: #0d2847;
+    --mid: #0f3d5c;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --coral: #f97316;
+    --coral-light: #fb923c;
+    --warm: #f59e0b;
+    --white: #e2f3f0;
+    --surface: #112240;
+    --card: #0f2744;
+    --border: #1a4460;
+    --text: #c8e0da;
+    --text-dim: #7a9b9b;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── Ocean background ── */
+  .ocean-bg {
+    position: fixed; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, #040d1a 0%, #0a1628 15%, #0d2847 40%, #0f3d5c 70%, #0a1628 100%);
+    pointer-events: none;
+  }
+  .ocean-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 30% at 20% 8%, rgba(20,184,166,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 25% at 75% 5%, rgba(14,165,233,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 20% at 50% 95%, rgba(20,184,166,0.08) 0%, transparent 50%);
+  }
+
+  /* floating particles */
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .particle {
+    position: absolute;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+  }
+
+  /* ── Main container ── */
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Hero Header ── */
+  .hero {
+    text-align: center;
+    padding: 40px 0 20px;
+    position: relative;
+  }
+  .hero-icon {
+    width: 80px; height: 80px;
+    margin: 0 auto 16px;
+    background: radial-gradient(circle, rgba(20,184,166,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: gentlePulse 3s ease-in-out infinite;
+  }
+  @keyframes gentlePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(20,184,166,0.15); }
+    50%      { transform: scale(1.06); box-shadow: 0 0 50px rgba(20,184,166,0.30); }
+  }
+  .hero-icon svg { width: 50px; height: 50px; }
+  .hero h1 {
+    font-size: 28px; font-weight: 700;
+    background: linear-gradient(135deg, var(--teal-light), #5eead4, var(--teal-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+  }
+  .hero .subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .hero .brand {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  /* wave divider */
+  .wave-divider {
+    height: 40px; margin: 8px 0 20px;
+    position: relative;
+  }
+  .wave-divider svg { position: absolute; bottom: 0; width: 100%; }
+
+  /* ── Section titles ── */
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    margin: 32px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-title .num {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--teal), #0f766e);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700;
+    color: #fff; flex-shrink: 0;
+  }
+  .section-title h2 {
+    font-size: 20px; font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light), transparent);
+  }
+
+  /* ── Step cards ── */
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .step-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--coral), #ea580c);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .step-card h3 {
+    font-size: 19px; color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Info boxes ── */
+  .tip-box, .warn-box, .info-box {
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 14px;
+    display: flex; gap: 10px;
+    line-height: 1.7;
+  }
+  .tip-box  { background: rgba(20,184,166,0.10); border: 1px solid rgba(20,184,166,0.25); }
+  .warn-box { background: rgba(239,68,68,0.10);  border: 1px solid rgba(239,68,68,0.25); }
+  .info-box { background: rgba(14,165,233,0.10); border: 1px solid rgba(14,165,233,0.25); }
+  .tip-box .icon, .warn-box .icon, .info-box .icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 12px 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 400px;
+  }
+  th {
+    background: rgba(20,184,166,0.12);
+    color: var(--teal-light);
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 10px 0 10px 32px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+  }
+  .checklist li::before {
+    content: '';
+    position: absolute; left: 0; top: 13px;
+    width: 18px; height: 18px;
+    border: 2px solid var(--teal);
+    border-radius: 5px;
+  }
+  .checklist li::after {
+    content: '✓';
+    position: absolute; left: 3px; top: 9px;
+    color: var(--teal-light);
+    font-size: 13px; font-weight: 700;
+  }
+
+  /* ── Maintenance cards ── */
+  .maintenance-grid {
+    display: grid; gap: 12px;
+  }
+  .maint-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .maint-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .maint-icon.daily { background: rgba(245,158,11,0.15); }
+  .maint-icon.weekly { background: rgba(20,184,166,0.15); }
+  .maint-icon.monthly { background: rgba(139,92,246,0.15); }
+
+  /* ── Livestock cards ── */
+  .creature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex; gap: 12px; align-items: center;
+  }
+  .creature-emoji {
+    font-size: 36px; flex-shrink: 0;
+    width: 48px; text-align: center;
+  }
+  .creature-info { flex: 1; }
+  .creature-info .name { font-weight: 600; color: var(--white); font-size: 15px; }
+  .creature-info .desc { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+  .difficulty {
+    display: flex; gap: 2px; margin-top: 4px;
+  }
+  .difficulty .star { color: var(--warm); font-size: 12px; }
+  .difficulty .star.off { color: #3a4a5a; }
+
+  /* ── Nitrogen cycle diagram ── */
+  .cycle-diagram {
+    display: flex; flex-direction: column; gap: 8px;
+    margin: 16px 0;
+    padding: 16px;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+  .cycle-step {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .cycle-step .label {
+    font-weight: 600; color: var(--white);
+    min-width: 60px; text-align: right;
+  }
+  .cycle-step .arrow { color: var(--teal-light); font-size: 18px; }
+  .cycle-step.danger  { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.20); }
+  .cycle-step.warning { background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.18); }
+  .cycle-step.ok      { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); }
+
+  /* ── Algae timeline ── */
+  .timeline { position: relative; padding-left: 28px; margin: 16px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--coral), #a855f7);
+  }
+  .timeline-item { position: relative; margin-bottom: 20px; }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -24px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--teal-light);
+    background: var(--deep);
+  }
+  .timeline-item:nth-child(2)::before { border-color: var(--warm); }
+  .timeline-item:nth-child(3)::before { border-color: #a855f7; }
+  .timeline-item .time  { font-size: 12px; color: var(--teal-light); font-weight: 600; }
+  .timeline-item .title { font-weight: 600; color: var(--white); font-size: 15px; }
+  .timeline-item .desc  { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+
+  /* ── FAQ accordion ── */
+  .faq-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 14px 16px;
+    font-weight: 600; font-size: 14px;
+    color: var(--white);
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    user-select: none;
+  }
+  .faq-q::after { content: '▾'; color: var(--teal-light); font-size: 12px; transition: transform 0.2s; }
+  .faq-item.open .faq-q::after { transform: rotate(180deg); }
+  .faq-a {
+    padding: 0 16px 14px;
+    font-size: 13px; color: var(--text-dim);
+    display: none;
+    line-height: 1.8;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA button ── */
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(135deg, var(--teal), #0f766e);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    margin: 24px auto;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none; cursor: pointer;
+    width: fit-content;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(20,184,166,0.3); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 30px 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+  }
+  .footer .logo-text { color: var(--teal-light); font-weight: 600; letter-spacing: 2px; font-size: 14px; }
+  .footer .since { color: var(--text-dim); font-size: 12px; margin-top: 4px; }
+  .footer .tagline { color: var(--text-dim); font-size: 12px; margin-top: 8px; font-style: italic; }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    z-index: 100;
+    transition: width 0.15s linear;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ── Back to top ── */
+  .back-top {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 44px; height: 44px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 20px;
+    cursor: pointer;
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.3s;
+    z-index: 50;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .back-top.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── System diagram SVG container ── */
+  .system-diagram {
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    margin: 12px 0;
+  }
+  .sys-part {
+    text-align: center;
+    width: 70px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .sys-part .icon {
+    font-size: 28px;
+    display: block; margin-bottom: 4px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 24px; }
+    .step-card h3 { font-size: 17px; }
+    .section-title h2 { font-size: 18px; }
+    table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"></div>
+
+<!-- floating particles -->
+<div class="particles" id="particles"></div>
+
+<!-- reading progress -->
+<div class="progress-bar" id="progressBar"></div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div class="container">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <header class="hero">
+    <div class="hero-icon">
+      <svg viewBox="0 0 64 64" fill="none">
+        <ellipse cx="32" cy="40" rx="28" ry="16" fill="rgba(20,184,166,0.15)" stroke="rgba(20,184,166,0.5)" stroke-width="2"/>
+        <path d="M14 36 Q20 24 32 26 Q44 24 50 36" fill="rgba(20,184,166,0.15)" stroke="rgba(20,184,166,0.6)" stroke-width="1.5"/>
+        <circle cx="28" cy="22" r="4" fill="none" stroke="rgba(251,146,60,0.7)" stroke-width="1.5"/>
+        <circle cx="25" cy="20" r="1.2" fill="rgba(251,146,60,0.8)"/>
+        <circle cx="36" cy="30" r="3" fill="none" stroke="rgba(20,184,166,0.5)" stroke-width="1.2"/>
+        <path d="M22 40 Q24 36 27 38" stroke="rgba(251,146,60,0.6)" stroke-width="1" fill="none"/>
+        <path d="M36 40 Q38 36 41 38" stroke="rgba(251,146,60,0.6)" stroke-width="1" fill="none"/>
+        <circle cx="10" cy="44" r="2.5" fill="rgba(20,184,166,0.12)"/>
+        <circle cx="54" cy="42" r="2" fill="rgba(20,184,166,0.10)"/>
+        <circle cx="44" cy="48" r="3" fill="rgba(20,184,166,0.08)"/>
+        <circle cx="18" cy="48" r="2" fill="rgba(20,184,166,0.10)"/>
+        <!-- bubbles -->
+        <circle cx="22" cy="16" r="1.5" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+        <circle cx="44" cy="14" r="1" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.7"/>
+        <circle cx="38" cy="12" r="1.8" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.7"/>
+      </svg>
+    </div>
+    <h1>小海缸开缸教程</h1>
+    <p class="subtitle">从零开始，打造你的桌面微型海洋</p>
+    <span class="brand">BLUE OCEAN MARINE</span>
+  </header>
+
+  <div class="wave-divider">
+    <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+      <path d="M0 30 C200 0, 400 40, 600 25 C800 10, 1000 35, 1200 20 L1200 40 L0 40 Z" fill="rgba(20,184,166,0.08)"/>
+      <path d="M0 35 C300 20, 500 40, 700 30 C900 20, 1100 38, 1200 28 L1200 40 L0 40 Z" fill="rgba(20,184,166,0.05)"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════ 一、欢迎 ═══════════ -->
+  <div class="section-title">
+    <span class="num">1</span>
+    <h2>欢迎来到海洋世界</h2>
+  </div>
+
+  <div class="card">
+    <p style="font-size:15px;line-height:2;">
+      现在你已经拿到了<strong style="color:var(--teal-light);">广东蓝海海洋科技有限公司</strong>的小海缸，就让我们开启一段神奇的海洋之旅吧！
+    </p>
+    <p style="font-size:14px;margin-top:10px;color:var(--text-dim);">
+      或许你曾在海洋馆里惊叹于珊瑚的绚烂、小丑鱼的灵动，而现在，你即将把这一小片海洋搬进自己的家里、办公桌上。这份教程会手把手带你完成从<strong style="color:var(--white);">"空缸"</strong>到<strong style="color:var(--white);">"微缩海洋"</strong>的全过程。
+    </p>
+    <div class="tip-box">
+      <span class="icon">💡</span>
+      <span>不要紧张，跟着步骤一步步来，你完全可以做到。先花几分钟了解你的小海缸，做到心中有数。</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ 二、认识你的小海缸 ═══════════ -->
+  <div class="section-title">
+    <span class="num">2</span>
+    <h2>认识你的小海缸</h2>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--white);font-size:17px;">🐚 什么是海水微缸？</h3>
+    <p style="font-size:14px;margin-top:8px;">
+      你手上的小海缸是一个 <strong style="color:var(--teal-light);">15-20 厘米的微型海水缸</strong>（圈内常称为"微缸"或"Pico缸"）。虽然个头不大，却能容纳完整的微型海洋生态系统——活石、珊瑚、小型无脊椎动物，甚至一两条迷你小鱼，都可以在里头和谐共生。
+    </p>
+    <div class="info-box" style="margin-top:12px;">
+      <span class="icon">🎯</span>
+      <span><strong>微缸的魅力：</strong>体积小、不占地方、放在桌面就能随时欣赏。但正因为水体积小，水质变化比大缸快得多，需要我们多一点点细心。</span>
+    </div>
+  </div>
+
+  <!-- 系统组成 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:17px;">⚙️ 你的海缸系统包含哪些部分？</h3>
+    <div class="system-diagram">
+      <div class="sys-part"><span class="icon">🫧</span>缸体<span style="color:var(--text-dim);font-size:10px;">超白玻璃</span></div>
+      <div class="sys-part"><span class="icon">🔍</span>过滤系统<span style="color:var(--text-dim);font-size:10px;">滤棉+活性炭</span></div>
+      <div class="sys-part"><span class="icon">🌀</span>循环水泵<span style="color:var(--text-dim);font-size:10px;">模拟洋流</span></div>
+      <div class="sys-part"><span class="icon">💡</span>灯光<span style="color:var(--text-dim);font-size:10px;">蓝白光谱</span></div>
+      <div class="sys-part"><span class="icon">🌡️</span>加热棒<span style="color:var(--text-dim);font-size:10px;">25-28℃</span></div>
+      <div class="sys-part"><span class="icon">📊</span>温度计<span style="color:var(--text-dim);font-size:10px;">实时监控</span></div>
+    </div>
+    <div class="tip-box">
+      <span class="icon">📌</span>
+      <span>不懂这些设备长什么样没关系，拿到产品后对照说明书认一遍就好。</span>
+    </div>
+  </div>
+
+  <!-- 氮循环 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:17px;">🧪 核心原理——氮循环（非常重要！）</h3>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">这是海水饲养中最核心的概念。理解了它，你就理解了为什么不能"今天开缸今天就放鱼"。</p>
+
+    <div class="cycle-diagram">
+      <div style="text-align:center;padding:6px;background:rgba(255,255,255,0.03);border-radius:6px;font-size:13px;color:var(--text-dim);">
+        🐟 鱼的排泄物 / 没吃完的饲料
+      </div>
+      <div style="text-align:center;color:var(--teal-light);font-size:18px;">⬇️</div>
+      <div class="cycle-step danger">
+        <span style="font-size:22px;">☠️</span>
+        <div><span class="label">氨 NH₃</span><br><span style="font-size:11px;color:#f87171;">剧毒！</span></div>
+        <span class="arrow">→</span>
+        <span style="font-size:11px;color:var(--text-dim);">硝化细菌 A 分解</span>
+      </div>
+      <div class="cycle-step warning">
+        <span style="font-size:22px;">⚠️</span>
+        <div><span class="label">亚硝酸盐 NO₂⁻</span><br><span style="font-size:11px;color:#fbbf24;">有毒！</span></div>
+        <span class="arrow">→</span>
+        <span style="font-size:11px;color:var(--text-dim);">硝化细菌 B 分解</span>
+      </div>
+      <div class="cycle-step ok">
+        <span style="font-size:22px;">✅</span>
+        <div><span class="label">硝酸盐 NO₃⁻</span><br><span style="font-size:11px;color:#4ade80;">低毒</span></div>
+        <span class="arrow">→</span>
+        <span style="font-size:11px;color:var(--text-dim);">💧 换水排出</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <span class="icon">🔑</span>
+      <span><strong>一个成熟的海缸</strong> = 建立了足够强大的硝化细菌群落，能快速把有毒的氨转化为硝酸盐。<strong style="color:var(--coral-light);">这个过程需要 2-4 周</strong>，这就是后面要讲的"养水期"。</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ 三、开缸前的准备 ═══════════ -->
+  <div class="section-title">
+    <span class="num">3</span>
+    <h2>开缸前的准备</h2>
+  </div>
+
+  <!-- 设备清单 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:17px;">📋 设备与材料清单</h3>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">在动手之前，请确保备齐了以下物品：</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>类别</th><th>物品</th><th>说明</th></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>小海缸缸体+过滤+水泵</td><td>产品套装内包含</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>海缸专用 LED 灯</td><td>需支持蓝光光谱</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>加热棒（25-50W）</td><td>根据缸体大小选择</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>温度计</td><td>随时监控水温</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>海盐</td><td>必须是海水专用盐！</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>纯净水</td><td>RO反渗透水或桶装纯净水</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>盐度计（光学）</td><td>比浮力式准确很多</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>活石</td><td>约 0.5-1.5 公斤</td></tr>
+        <tr><td><span style="color:var(--danger);">必需</span></td><td>硝化细菌液/粉</td><td>加速养水进程</td></tr>
+        <tr><td><span style="color:var(--warm);">推荐</span></td><td>活沙/珊瑚底砂</td><td>装饰+辅助培养菌群</td></tr>
+        <tr><td><span style="color:var(--warm);">推荐</span></td><td>水质测试剂</td><td>氨、亚硝酸盐、硝酸盐</td></tr>
+        <tr><td><span style="color:var(--warm);">推荐</span></td><td>小抄网、长镊子、刮藻刀</td><td>日常打理工具</td></tr>
+        <tr><td><span style="color:var(--warm);">推荐</span></td><td>小水桶（专用）</td><td>不要和家务混用</td></tr>
+      </table>
+    </div>
+    <div class="warn-box">
+      <span class="icon">🚫</span>
+      <span><strong>关于水的特别提醒：</strong>自来水含有氯、重金属等有害物质。即使除氯处理过也可能含其他杂质。强烈建议使用<strong style="color:var(--white);">纯净水或 RO 反渗透水</strong>——这是养好海缸的第一道保障。很多新手失败，问题就出在水上。</span>
+    </div>
+  </div>
+
+  <!-- 摆放位置 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:17px;">📍 摆放位置的选择</h3>
+    <ul class="checklist" style="margin-top:8px;">
+      <li><strong style="color:var(--success);">✓</strong> 平稳的台面——装满水后有重量</li>
+      <li><strong style="color:var(--success);">✓</strong> 靠近电源——灯、泵、加热棒都需插电</li>
+      <li><strong style="color:var(--success);">✓</strong> 避免阳光直射——直射会导致藻类爆发和水温剧烈波动</li>
+      <li><strong style="color:var(--danger);">✗</strong> 远离空调出风口、暖气片</li>
+      <li><strong style="color:var(--danger);">✗</strong> 远离厨房——油烟可能污染水体</li>
+      <li><strong style="color:var(--success);">✓</strong> 便于观察和操作——留出换水、打理的空间</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════ 四、开缸步骤 ═══════════ -->
+  <div class="section-title">
+    <span class="num">4</span>
+    <h2>开缸步骤（手把手）</h2>
+  </div>
+  <p style="font-size:14px;color:var(--text-dim);margin-bottom:16px;">东西都准备好了，我们正式开始！</p>
+
+  <!-- 第一步 -->
+  <div class="step-card">
+    <span class="step-badge">🔧 第一步</span>
+    <h3>清洗缸体和设备</h3>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;">
+      <li>用干净的湿布擦拭缸体内外，<strong style="color:var(--danger);">不要使用任何洗洁精、肥皂或化学清洁剂</strong>——残留物对海洋生物是致命的</li>
+      <li>如有底砂/活沙，用清水冲洗几遍至水不再浑浊（用纯净水最后冲一遍更好）</li>
+      <li>将滤材（滤棉、生化球等）用清水冲洗一下</li>
+      <li>活石<strong style="color:var(--teal-light);">不需要洗</strong>，保持它上面附着的微生物</li>
+    </ol>
+    <div class="warn-box">
+      <span class="icon">⚠️</span>
+      <span>从这一刻起，如果手擦了护手霜、涂了防晒、碰过化学品，都要先彻底洗干净再接触缸和器材。最好养成操作前用清水冲手的习惯。</span>
+    </div>
+  </div>
+
+  <!-- 第二步 -->
+  <div class="step-card">
+    <span class="step-badge">🏖️ 第二步</span>
+    <h3>铺设底砂</h3>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;">
+      <li>将洗好的底砂/活沙均匀铺在缸底</li>
+      <li>厚度约 <strong style="color:var(--teal-light);">1-2 厘米</strong> 即可，不用太厚（微缸空间宝贵）</li>
+      <li>可以前低后高，营造纵深感</li>
+    </ol>
+    <div style="text-align:center;font-size:40px;padding:10px;opacity:0.4;">🪨 ✨ 🏝️</div>
+  </div>
+
+  <!-- 第三步 -->
+  <div class="step-card">
+    <span class="step-badge">💧 第三步</span>
+    <h3>加水和化盐</h3>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">这是最需要耐心的一步。盐度不对，后面一切免谈。</p>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;">
+      <li><strong>先加水，再加盐。</strong>将纯净水缓缓倒入缸中（垫一个盘子或塑料袋在砂面上，避免水流冲乱底砂），加到七到八分满</li>
+      <li>开启循环水泵，让水流动起来</li>
+      <li>少量多次地加入海盐，每次加一点，完全溶解后再加下一批</li>
+      <li>用盐度计测量。<strong style="color:var(--teal-light);">目标盐度：1.020-1.025（比重）</strong>，对应 30-33 ppt</li>
+      <li>盐度高了加纯净水稀释，低了继续加盐，直到稳定在目标范围</li>
+    </ol>
+    <div class="info-box">
+      <span class="icon">🔬</span>
+      <div>
+        <strong>光学盐度计怎么用？</strong><br>
+        ① 掀开盖板，滴 2-3 滴缸水在棱镜上<br>
+        ② 盖上盖板，对着光源看<br>
+        ③ 读数线 = 蓝色和白色交界的位置<br>
+        ④ 每次用完清水冲洗、擦干<br>
+        <strong style="color:var(--coral-light);">推荐新手：盐度 1.023-1.024</strong>，大多数海洋生物最舒适
+      </div>
+    </div>
+  </div>
+
+  <!-- 第四步 -->
+  <div class="step-card">
+    <span class="step-badge">🔌 第四步</span>
+    <h3>安装并开启设备</h3>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;">
+      <li><strong>安装加热棒</strong>：放入过滤格或缸内水流好的位置，设定 <strong style="color:var(--teal-light);">25-28℃</strong>（推荐 26℃）</li>
+      <li><strong>安装温度计</strong>：贴在方便观察的位置，不挡住观赏面</li>
+      <li><strong>安装灯光</strong>：架在缸顶，先不要开（活石放好后再开灯）</li>
+      <li><strong>确认水泵正常运转</strong>：检查出水口方向，水流应能带动全缸循环</li>
+    </ol>
+  </div>
+
+  <!-- 第五步 -->
+  <div class="step-card">
+    <span class="step-badge">🪨 第五步</span>
+    <h3>放入活石造景</h3>
+    <p style="font-size:14px;margin-bottom:8px;">活石是海缸的<strong style="color:var(--teal-light);">"心脏"</strong>——不仅是造景材料，更携带着大量天然微生物（包括硝化细菌），是生态系统的基石。</p>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;">
+      <li><strong>先构思再动手</strong>：在缸外试着摆一摆，找好喜欢的造型</li>
+      <li>活石放入缸中，轻轻放置确保稳定——不要靠玻璃太近，留出刮藻和鱼游动的空间</li>
+      <li>可以堆叠 2-3 块，留出洞穴和缝隙，日后生物有躲藏的地方</li>
+      <li><strong>造景原则：稳定第一 + 留白第二</strong>（不要塞满）</li>
+    </ol>
+    <div class="tip-box">
+      <span class="icon">🎨</span>
+      <span><strong>造景建议：</strong>微缸空间有限，不超过 2-3 块石头，给水和生物留出空间。试试"主石+辅石"的简单构图。</span>
+    </div>
+  </div>
+
+  <!-- 第六步 -->
+  <div class="step-card">
+    <span class="step-badge">🧫 第六步</span>
+    <h3>加入硝化细菌，开始养水</h3>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;">
+      <li>按产品说明剂量，将硝化细菌液/粉倒入缸中（通常是倒入过滤格或水流大的位置）</li>
+      <li>开启灯光（每天 8-10 小时即可，初期可以少开）</li>
+      <li>让整个系统运转起来——水泵 24 小时不停，加热棒恒温 26℃</li>
+    </ol>
+  </div>
+
+  <!-- 第七步：养水期 -->
+  <div class="step-card">
+    <span class="step-badge">⏳ 第七步</span>
+    <h3>耐心等待——养水期的观察</h3>
+    <p style="font-size:14px;margin-bottom:12px;"><strong style="color:var(--coral-light);">这是新手最难熬、但也最重要的一段时间：2-4 周的养水期。</strong></p>
+
+    <p style="font-size:14px;color:var(--white);font-weight:600;margin-bottom:8px;">🪸 暴藻三部曲</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time">第 3-7 天</div>
+        <div class="title">🟤 褐藻期</div>
+        <div class="desc">活石和缸壁上出现褐色薄膜——正常！硅藻爆发，说明硝化系统在建立中</div>
+      </div>
+      <div class="timeline-item">
+        <div class="time">第 7-14 天</div>
+        <div class="title">🟢 绿藻期</div>
+        <div class="desc">褐藻褪去，长出绿色丝状藻——正常！继续等待</div>
+      </div>
+      <div class="timeline-item">
+        <div class="time">第 14-28 天</div>
+        <div class="title">🟣 钙藻期</div>
+        <div class="desc">石头上出现紫色/粉色的硬质斑点——好现象！水质趋于成熟</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--white);font-weight:600;margin-bottom:4px;">养水期间你该做什么：</p>
+    <ul style="font-size:13px;padding-left:20px;line-height:2;color:var(--text-dim);">
+      <li>🔄 每周换水 10%-20%</li>
+      <li>📏 每周测一次水质（氨→亚硝酸盐→硝酸盐）</li>
+      <li>👀 每天观察：水清澈吗？活石上有什么变化？</li>
+      <li>⏳ <strong style="color:var(--coral-light);">忍住不放生物！</strong></li>
+    </ul>
+
+    <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.20);border-radius:10px;padding:14px;margin-top:14px;">
+      <p style="font-size:14px;color:var(--success);font-weight:600;">✅ 什么时候可以放生物？</p>
+      <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">用测试剂测水质，三个条件<strong>同时满足</strong>且稳定 3-5 天：</p>
+      <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+        <span style="background:rgba(34,197,94,0.12);padding:6px 14px;border-radius:20px;font-size:13px;color:#4ade80;">氨 = 0</span>
+        <span style="background:rgba(34,197,94,0.12);padding:6px 14px;border-radius:20px;font-size:13px;color:#4ade80;">亚硝酸盐 = 0</span>
+        <span style="background:rgba(34,197,94,0.12);padding:6px 14px;border-radius:20px;font-size:13px;color:#4ade80;">硝酸盐 &lt; 20 ppm</span>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:12px;">
+      <span class="icon">🛑</span>
+      <span><strong>新手最容易犯的错：</strong>开缸 3 天看水清了就急着买鱼放进去。请一定忍住！<strong style="color:var(--white);">水清 ≠ 水好。</strong>看不见的氨和亚硝酸盐正在高峰。耐心是这个阶段最好的投资。</span>
+    </div>
+  </div>
+
+  <!-- 第八步 -->
+  <div class="step-card">
+    <span class="step-badge">🎉 第八步</span>
+    <h3>水质达标，迎接第一批居民</h3>
+    <p style="font-size:14px;color:var(--text-dim);">恭喜！水质达标了，现在可以放生物了。请遵循以下原则：</p>
+    <ol style="font-size:14px;padding-left:20px;line-height:2.2;margin-top:8px;">
+      <li><strong>循序渐进</strong>：每次只加 1-2 个生物，间隔至少 1-2 周</li>
+      <li><strong>先易后难</strong>：先放清洁生物（食藻螺、寄居蟹）→ 再放珊瑚 → 最后放鱼</li>
+      <li><strong>入缸前要过温过水</strong>：</li>
+    </ol>
+    <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:140px;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.18);border-radius:10px;padding:12px;text-align:center;">
+        <span style="font-size:24px;">🌡️</span>
+        <p style="font-size:13px;font-weight:600;color:var(--white);">过温</p>
+        <p style="font-size:12px;color:var(--text-dim);">装生物的袋子漂浮在缸里<br>15-20 分钟，让温度一致</p>
+      </div>
+      <div style="flex:1;min-width:140px;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.18);border-radius:10px;padding:12px;text-align:center;">
+        <span style="font-size:24px;">💧</span>
+        <p style="font-size:13px;font-weight:600;color:var(--white);">过水</p>
+        <p style="font-size:12px;color:var(--text-dim);">每 5-10 分钟舀入少量缸水<br>重复 4-5 次，逐渐适应</p>
+      </div>
+    </div>
+    <div class="warn-box" style="margin-top:10px;">
+      <span class="icon">⚠️</span>
+      <span>结束后用抄网将生物捞入缸中，<strong>不要把袋子里的水倒入缸中！</strong></span>
+    </div>
+  </div>
+
+  <!-- ═══════════ 五、日常维护 ═══════════ -->
+  <div class="section-title">
+    <span class="num">5</span>
+    <h2>后续日常维护</h2>
+  </div>
+  <p style="font-size:14px;color:var(--text-dim);margin-bottom:14px;">维护不复杂，但需要<strong style="color:var(--white);">规律</strong>。养成习惯就好。</p>
+
+  <div class="maintenance-grid">
+    <div class="maint-card">
+      <div class="maint-icon daily">☀️</div>
+      <div>
+        <p style="font-weight:600;color:var(--white);">每日维护（1-2 分钟）</p>
+        <ul style="font-size:13px;color:var(--text-dim);padding-left:16px;line-height:2;">
+          <li>👁️ 看一眼：设备运转正常？灯亮吗？水流正常？</li>
+          <li>🌡️ 看温度：在 25-28℃ 范围？</li>
+          <li>🐠 看生物：珊瑚开了吗？鱼活跃吗？</li>
+          <li>💧 看水位：蒸发导致水位下降？（微缸蒸发很快！）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="maint-card">
+      <div class="maint-icon weekly">📅</div>
+      <div>
+        <p style="font-weight:600;color:var(--white);">每周维护（10-15 分钟）</p>
+        <ul style="font-size:13px;color:var(--text-dim);padding-left:16px;line-height:2;">
+          <li>💧 <strong>换水 10%-20%</strong>（新水必须提前化好！）</li>
+          <li>🧹 刮藻刀清理缸壁藻类</li>
+          <li>🔬 测硝酸盐，确保 &lt; 20 ppm</li>
+          <li>🧽 湿布清洁缸外壁</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="maint-card">
+      <div class="maint-icon monthly">🗓️</div>
+      <div>
+        <p style="font-weight:600;color:var(--white);">每两周/每月维护</p>
+        <ul style="font-size:13px;color:var(--text-dim);padding-left:16px;line-height:2;">
+          <li>🧻 更换滤棉（每 2-4 周）</li>
+          <li>🖤 更换活性炭（每 3-4 周）</li>
+          <li>🔌 检查设备：水泵、加热棒、电线</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 换水步骤 -->
+  <div class="card" style="margin-top:16px;">
+    <h3 style="color:var(--white);font-size:16px;">💧 换水步骤详解</h3>
+    <ol style="font-size:13px;padding-left:18px;line-height:2.2;margin-top:8px;color:var(--text-dim);">
+      <li><strong>提前准备新水</strong>：纯净水+海盐调好，盐度 1.023-1.024，调至和缸内同温</li>
+      <li>关掉水泵和加热棒（安全起见）</li>
+      <li>用管子或小杯取出旧水（约总水体 10%-20%）</li>
+      <li>顺便吸一下底砂表面和死角的积污</li>
+      <li>将新水缓缓倒入缸中（垫盘子/塑料袋，避免冲乱造景）</li>
+      <li>开启设备，检查一切正常</li>
+    </ol>
+  </div>
+
+  <!-- ═══════════ 六、生物选择指南 ═══════════ -->
+  <div class="section-title">
+    <span class="num">6</span>
+    <h2>生物选择指南</h2>
+  </div>
+  <p style="font-size:14px;color:var(--text-dim);margin-bottom:14px;">微缸水体小，<strong style="color:var(--coral-light);">不是啥都能养</strong>。以下推荐适合 15-20cm 微缸的生物：</p>
+
+  <!-- 鱼类 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:16px;">🐠 鱼类（最多 1-2 条！）</h3>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">选鱼要满足：体型小、活动范围小、性格温和。</p>
+
+    <div class="creature-card">
+      <span class="creature-emoji">🐠</span>
+      <div class="creature-info">
+        <p class="name">小丑鱼（公子小丑）</p>
+        <p class="desc">最经典的海水鱼，皮实好养。微缸只能养 1 条幼体</p>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🐟</span>
+      <div class="creature-info">
+        <p class="name">虾虎鱼（天线虾虎、黄蟋蟀虾虎）</p>
+        <p class="desc">体型极小，性格有趣，非常适合微缸</p>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🍓</span>
+      <div class="creature-info">
+        <p class="name">草莓鱼</p>
+        <p class="desc">颜色鲜艳，体型小，可能会有点领地意识</p>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">✨</span>
+      <div class="creature-info">
+        <p class="name">雷达鱼</p>
+        <p class="desc">身形纤细优雅，胆子小，需有躲藏处</p>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <span class="icon">🚫</span>
+      <span><strong>不适合微缸：</strong>吊类（蓝吊、黄吊）、神仙鱼、蝶鱼、大型隆头鱼——体型太大或游动需要更大空间。</span>
+    </div>
+    <div class="tip-box">
+      <span class="icon">💡</span>
+      <span>微缸养 1 条小鱼就足够了。甚至可以纯养珊瑚和清洁生物，维护更轻松，也一样很美。</span>
+    </div>
+  </div>
+
+  <!-- 珊瑚 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:16px;">🪸 珊瑚（微缸的主角）</h3>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">适合微缸的以<strong>软体珊瑚和 LPS</strong>为主。</p>
+
+    <div class="creature-card">
+      <span class="creature-emoji">🟠</span>
+      <div class="creature-info">
+        <p class="name">纽扣珊瑚</p>
+        <p class="desc">颜色丰富，成片生长，新手首选</p>
+        <div class="difficulty"><span class="star">★</span><span class="star off">★</span><span class="star off">★</span><span style="font-size:11px;color:var(--text-dim);margin-left:4px;">极易</span></div>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🍄</span>
+      <div class="creature-info">
+        <p class="name">菇珊瑚</p>
+        <p class="desc">形态可爱，耐受力强</p>
+        <div class="difficulty"><span class="star">★</span><span class="star off">★</span><span class="star off">★</span><span style="font-size:11px;color:var(--text-dim);margin-left:4px;">极易</span></div>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🟢</span>
+      <div class="creature-info">
+        <p class="name">草皮珊瑚</p>
+        <p class="desc">绿色地毯般蔓延生长</p>
+        <div class="difficulty"><span class="star">★</span><span class="star off">★</span><span class="star off">★</span><span style="font-size:11px;color:var(--text-dim);margin-left:4px;">极易</span></div>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🔨</span>
+      <div class="creature-info">
+        <p class="name">榔头珊瑚</p>
+        <p class="desc">枝状，顶端随水流摇摆</p>
+        <div class="difficulty"><span class="star">★</span><span class="star">★</span><span class="star off">★</span><span style="font-size:11px;color:var(--text-dim);margin-left:4px;">中等</span></div>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🏮</span>
+      <div class="creature-info">
+        <p class="name">火柴头珊瑚</p>
+        <p class="desc">经典 LPS，形态优美</p>
+        <div class="difficulty"><span class="star">★</span><span class="star">★</span><span class="star off">★</span><span style="font-size:11px;color:var(--text-dim);margin-left:4px;">中等</span></div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <span class="icon">⚠️</span>
+      <span><strong>SPS（小水螅体石珊瑚）</strong>如鹿角珊瑚等，对水质和光照要求极高，<strong>不建议新手尝试。</strong></span>
+    </div>
+  </div>
+
+  <!-- 清洁生物 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:16px;">🦀 清洁生物（开缸功臣）</h3>
+    <div class="creature-card">
+      <span class="creature-emoji">🐌</span>
+      <div class="creature-info">
+        <p class="name">食藻螺（牛眼螺）</p>
+        <p class="desc">吃缸壁和石头上的藻类</p>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🦀</span>
+      <div class="creature-info">
+        <p class="name">寄居蟹（蓝脚/红脚）</p>
+        <p class="desc">吃残饵和藻类，有趣好看</p>
+      </div>
+    </div>
+    <div class="creature-card">
+      <span class="creature-emoji">🦐</span>
+      <div class="creature-info">
+        <p class="name">清洁虾（美人虾、火焰虾）</p>
+        <p class="desc">观赏性强，会清理残饵</p>
+      </div>
+    </div>
+    <div class="tip-box">
+      <span class="icon">📊</span>
+      <span><strong>数量建议：</strong>1-2 只食藻螺 + 1 只寄居蟹就足够微缸的清洁需求。放太多它们会饿死。</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ 七、常见问题 ═══════════ -->
+  <div class="section-title">
+    <span class="num">7</span>
+    <h2>常见问题与注意事项</h2>
+  </div>
+
+  <!-- 喂食 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:16px;">🍽️ 喂食原则</h3>
+    <ul style="font-size:13px;padding-left:18px;line-height:2.2;color:var(--text-dim);">
+      <li>微缸水体小，应该是<strong style="color:var(--white);">"极少、少次"</strong></li>
+      <li>🐠 鱼：每天 1 次，每次几颗微粒饲料，<strong>30 秒内吃完为佳</strong></li>
+      <li>🪸 珊瑚：每周 1-2 次，珊瑚液体饲料或浮游生物液，按说明剂量<strong>减半使用</strong></li>
+      <li>🥇 <strong>黄金法则：宁少勿多。</strong>饲料沉底没吃完 → 污染水质 → 氨飙升 → 死生物</li>
+    </ul>
+  </div>
+
+  <!-- 不要伸手 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:16px;">🖐️ 尽量不要把手伸入鱼缸</h3>
+    <ul style="font-size:13px;padding-left:18px;line-height:2.2;color:var(--text-dim);">
+      <li>手上的油脂、汗液、洗手液残留都会污染水质</li>
+      <li>微缸水体小，一点点污染就会被放大</li>
+      <li>如果必须伸手，先用清水彻底冲洗双手和手臂，<strong>不要用肥皂</strong></li>
+      <li>更好的做法：用长镊子或专用工具操作</li>
+    </ul>
+  </div>
+
+  <!-- 蒸发补水 -->
+  <div class="card" style="border-color:rgba(239,68,68,0.3);">
+    <h3 style="color:var(--coral-light);font-size:16px;">💧 蒸发补水——微缸最重要的事之一！</h3>
+    <p style="font-size:14px;margin-top:8px;line-height:2;">
+      微缸蒸发非常快——可能一天就能蒸发掉 <strong style="color:var(--coral-light);">5%-10%</strong> 的水。<br>
+      <strong style="color:var(--white);">水蒸发了，盐不会蒸发</strong>，所以盐度会越来越高！
+    </p>
+    <ul style="font-size:13px;padding-left:18px;line-height:2.2;margin-top:6px;color:var(--text-dim);">
+      <li>📏 <strong>每天检查水位</strong>，补充<strong style="color:var(--white);">纯淡水</strong>（不加盐！）</li>
+      <li>🔖 如果缸有过滤格，水位线通常标在泵格位置</li>
+      <li>🛒 可以买一个自动补水器（几十块钱），省心很多</li>
+      <li>🛑 <strong style="color:var(--danger);">忘了补水 → 盐度飙升 → 生物死亡</strong>，微缸新手翻车的头号原因！</li>
+    </ul>
+  </div>
+
+  <!-- 常见异常 -->
+  <div class="card">
+    <h3 style="color:var(--white);font-size:16px;">🚨 常见异常与应对</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>异常现象</th><th>可能原因</th><th>解决方法</th></tr>
+        <tr><td>水变浑浊/发白</td><td>硝化系统崩溃</td><td>少量换水，暂停喂食，等待恢复</td></tr>
+        <tr><td>缸壁长满藻</td><td>营养盐过高/光照太久</td><td>减少光照，增加换水，检查喂食量</td></tr>
+        <tr><td>珊瑚不开/缩起</td><td>水质波动、盐度异常</td><td>测水质，确认盐度和温度</td></tr>
+        <tr><td>鱼呼吸急促/浮头</td><td>缺氧或氨中毒</td><td>加大水面扰动，测氨，必要时大量换水</td></tr>
+        <tr><td>水面有油膜</td><td>水面缺乏扰动</td><td>调整出水口方向，让水面有波纹</td></tr>
+        <tr><td>鱼身上有白点</td><td>白点病（海水小瓜虫）</td><td>微缸难用药，建议隔离治疗。预防远胜治疗！</td></tr>
+      </table>
+    </div>
+    <div class="info-box">
+      <span class="icon">🩺</span>
+      <span><strong>遇到问题别慌，也别急着下药。</strong>微缸的第一应对手段永远是：<strong style="color:var(--white);">测水质 → 少量换水 → 观察。</strong>大部分问题通过换水都能缓解。</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ 八、写在最后 ═══════════ -->
+  <div class="section-title">
+    <span class="num">8</span>
+    <h2>写在最后</h2>
+  </div>
+
+  <div class="card" style="text-align:center;padding:28px 20px;">
+    <p style="font-size:15px;line-height:2.2;text-align:left;">
+      恭喜你读到了这里！你已经比 90% 冲动买缸的新手更有准备了。
+    </p>
+    <p style="font-size:14px;line-height:2;text-align:left;color:var(--text-dim);margin-top:8px;">
+      海洋缸的乐趣不只是"好看"——当你看到纽扣珊瑚从一小撮蔓延成一片花海，当你看到小丑鱼钻进榔头珊瑚里安心地睡觉，当你发现石头上不知什么时候冒出一只小小的管虫……那种<strong style="color:var(--white);">"亲手搭建了一个小小世界"</strong>的成就感，是任何装饰品都给不了的。
+    </p>
+
+    <div style="background:rgba(20,184,166,0.06);border:1px solid rgba(20,184,166,0.15);border-radius:12px;padding:16px;margin-top:16px;text-align:left;">
+      <p style="font-size:14px;color:var(--teal-light);font-weight:600;margin-bottom:8px;">🌟 记住几个最重要的原则：</p>
+      <p style="font-size:14px;line-height:2.2;">
+        1. 🐢 <strong>慢，就是快。</strong>耐心是海缸的第一要素<br>
+        2. 🧪 <strong>水质，永远是第一位。</strong>水好了，生物自然会好<br>
+        3. 💧 <strong>规律的换水，胜过一切"神药"。</strong><br>
+        4. 📏 <strong>有疑问，先测水。</strong>测试剂是最诚实的答案
+      </p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <a href="#" class="cta" style="display:flex;margin:20px auto;">
+    🐠 开始你的海洋之旅
+  </a>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p class="logo-text">BLUE OCEAN MARINE</p>
+    <p class="since">广东蓝海海洋科技有限公司 · 始于 1978 年</p>
+    <p class="tagline">两代人深耕海洋观赏生物领域 · 让海洋走进千家万户</p>
+    <p style="color:var(--text-dim);font-size:11px;margin-top:8px;">
+      📝 本教程适用于蓝海海洋 15-20cm 微型海水缸系列产品<br>
+      如需更多帮助，请联系客服或访问 lanhai-marine.com
+    </p>
+  </div>
+
+</div><!-- end container -->
+
+<script>
+// ── floating particles ──
+(function(){
+  const container = document.getElementById('particles');
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 12 + 10) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    container.appendChild(p);
+  }
+})();
+
+// ── reading progress bar ──
+(function(){
+  const bar = document.getElementById('progressBar');
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', function(){
+    const h = document.documentElement;
+    const total = h.scrollHeight - h.clientHeight;
+    const pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
+    bar.style.width = pct + '%';
+
+    if (h.scrollTop > 400) {
+      backTop.classList.add('visible');
+    } else {
+      backTop.classList.remove('visible');
+    }
+  });
+})();
+
+// ── FAQ accordion ──
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', function(){
+    this.parentElement.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
