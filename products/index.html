@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LANHAI MARINE · 产品中心 / Products</title>
+<style>
+  :root {
+    --deep: #0a1628;
+    --card: #0f2744;
+    --border: #1a4460;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --white: #e2f3f0;
+    --text: #c8e0da;
+    --text-dim: #7a9b9b;
+    --radius: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body.lang-zh .en { display: none; }
+  body.lang-en .zh { display: none; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  .ocean-bg {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(180deg, #040d1a 0%, #0a1628 18%, #0d2847 45%, #0f3d5c 72%, #0a1628 100%);
+  }
+  .ocean-bg::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 30% at 18% 6%, rgba(20,184,166,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 25% at 82% 4%, rgba(14,165,233,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 22% at 50% 96%, rgba(20,184,166,0.08) 0%, transparent 50%);
+  }
+
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 18px 48px; position: relative; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 22px 0 0; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-dim); text-decoration: none; font-size: 13px;
+    border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px;
+    transition: .2s;
+  }
+  .back:hover { color: var(--teal-light); border-color: var(--teal); }
+  .lang-switch {
+    display: inline-flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+  }
+  .lang-switch button {
+    font: inherit; font-size: 12px; cursor: pointer; border: 0;
+    background: transparent; color: var(--text-dim); padding: 6px 14px; transition: .2s;
+  }
+  .lang-switch button.active { background: var(--teal); color: #fff; }
+
+  .hero { text-align: center; padding: 34px 0 24px; }
+  .hero .eyebrow {
+    display: inline-block; font-size: 11px; letter-spacing: 4px;
+    color: var(--teal-light); border: 1px solid rgba(20,184,166,0.3);
+    border-radius: 20px; padding: 4px 14px; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 30px; font-weight: 700; letter-spacing: 3px;
+    background: linear-gradient(135deg, #5eead4, var(--teal-light), #5eead4);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p { margin-top: 10px; font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
+  .hero .line {
+    width: 120px; height: 1px; margin: 20px auto 0;
+    background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  }
+
+  .filter { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 6px 0 26px; }
+  .filter button {
+    font: inherit; font-size: 13px; cursor: pointer;
+    background: rgba(20,184,166,0.06); color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 20px; padding: 7px 18px;
+    transition: .2s;
+  }
+  .filter button:hover { color: var(--teal-light); border-color: rgba(20,184,166,0.5); }
+  .filter button.active {
+    background: linear-gradient(135deg, var(--teal), #0f766e);
+    color: #fff; border-color: transparent;
+    box-shadow: 0 6px 18px rgba(13,148,136,0.3);
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+
+  .p-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+  }
+  .p-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(20,184,166,0.45);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+  }
+  .p-img {
+    background: #fff;
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .p-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  .p-body { padding: 18px 18px 20px; display: flex; flex-direction: column; flex: 1; }
+  .p-cat {
+    align-self: flex-start; font-size: 11px; letter-spacing: 1px;
+    color: var(--teal-light); background: rgba(20,184,166,0.1);
+    border: 1px solid rgba(20,184,166,0.25);
+    border-radius: 12px; padding: 2px 10px; margin-bottom: 10px;
+  }
+  .p-name { font-size: 19px; font-weight: 700; color: var(--white); letter-spacing: 1px; line-height: 1.45; }
+  .p-spec { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; }
+  .p-spec span {
+    font-size: 12px; color: var(--text-dim);
+    border: 1px dashed var(--border); border-radius: 8px; padding: 3px 10px;
+  }
+  .p-desc { font-size: 13.5px; color: var(--text-dim); line-height: 1.85; }
+
+  details { margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; }
+  details summary {
+    cursor: pointer; font-size: 12.5px; color: var(--teal-light);
+    list-style: none; display: flex; align-items: center; gap: 6px; user-select: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: '▾'; font-size: 11px; transition: transform .2s; }
+  details[open] summary::after { transform: rotate(180deg); }
+  .detail-body { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); line-height: 1.9; }
+  .detail-body h4 { font-size: 12.5px; color: var(--white); font-weight: 600; margin: 12px 0 4px; }
+  .detail-body h4:first-child { margin-top: 0; }
+  .detail-body strong { color: var(--teal-light); font-weight: 600; }
+
+  /* contact */
+  .contact {
+    margin-top: 40px;
+    background: linear-gradient(135deg, rgba(13,148,136,0.12), rgba(15,39,68,0.9));
+    border: 1px solid rgba(20,184,166,0.28);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+    display: flex; flex-wrap: wrap; gap: 22px; align-items: center;
+    justify-content: space-between;
+  }
+  .contact-left .c-title { font-size: 12px; letter-spacing: 3px; color: var(--teal-light); margin-bottom: 8px; }
+  .contact-left .c-name { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: 1px; }
+  .contact-left .c-role { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+  .contact-right { font-size: 13px; line-height: 2.0; }
+  .contact-right a { color: var(--text); text-decoration: none; }
+  .contact-right a:hover { color: var(--teal-light); }
+  .contact-right .row { display: flex; gap: 8px; align-items: baseline; }
+  .contact-right .row i { color: var(--teal-light); font-style: normal; width: 16px; flex-shrink: 0; }
+
+  .footer { text-align: center; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--border); }
+  .footer .logo { color: var(--teal-light); font-weight: 600; letter-spacing: 3px; font-size: 14px; }
+  .footer p { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+</style>
+</head>
+<body class="lang-zh">
+<div class="ocean-bg"></div>
+
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../"><span class="zh">← 返回开缸教程</span><span class="en">← Back to Guide</span></a>
+    <div class="lang-switch">
+      <button data-lang="zh" class="active">中文</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">PRODUCTS</div>
+    <h1><span class="zh">产品中心</span><span class="en">Product Center</span></h1>
+    <p>
+      <span class="zh">广东蓝海海洋科技有限公司 · 海水生态全系产品</span>
+      <span class="en">Guangdong Lanhai Marine Technology Co., Ltd. · Full Range of Marine Products</span>
+    </p>
+    <div class="line"></div>
+  </header>
+
+  <div class="filter" id="filter">
+    <button class="active" data-cat="all"><span class="zh">全部</span><span class="en">All</span></button>
+    <button data-cat="water"><span class="zh">水质管理</span><span class="en">Water Care</span></button>
+    <button data-cat="device"><span class="zh">器材设备</span><span class="en">Equipment</span></button>
+    <button data-cat="salt"><span class="zh">海盐配方</span><span class="en">Sea Salt</span></button>
+  </div>
+
+  <div class="grid" id="grid">
+
+    <!-- 1 硝化细菌 -->
+    <article class="p-card" data-cat="water">
+      <div class="p-img"><img src="img/nitro.jpg" alt="ReefMax Nitrifying Bacteria"></div>
+      <div class="p-body">
+        <span class="p-cat"><span class="zh">水质管理</span><span class="en">Water Care</span></span>
+        <h2 class="p-name"><span class="zh">ReefMax 复合硝化细菌</span><span class="en">ReefMax Nitrifying Bacteria</span></h2>
+        <div class="p-spec">
+          <span><span class="zh">净含量 30ml</span><span class="en">Net 30 ml</span></span>
+          <span><span class="zh">保质期 1 年</span><span class="en">Shelf Life 1 Year</span></span>
+          <span><span class="zh">2-5℃ 冷藏</span><span class="en">Store at 2–5℃</span></span>
+        </div>
+        <p class="p-desc">
+          <span class="zh">专为海水鱼缸设计，精选高效菌株，不含化学药剂，对生物无刺激。高效分解残饵、粪便等有机碎屑，有效降低水体富营养化与混浊度，迅速降低水中氨氮和亚硝酸盐，帮助快速建立稳定的硝化系统。</span>
+          <span class="en">Formulated for saltwater aquariums with selected high-efficiency bacterial strains — chemical-free and non-irritating to livestock. Efficiently breaks down leftover food and organic detritus, reduces eutrophication and turbidity, and rapidly lowers ammonia and nitrite to establish a stable nitrifying system.</span>
+        </p>
+        <details>
+          <summary><span class="zh">使用说明 / 贮藏 / 注意事项</span><span class="en">Instructions / Storage / Precautions</span></summary>
+          <div class="detail-body">
+            <h4><span class="zh">使用说明</span><span class="en">Instructions</span></h4>
+            <div class="zh">开缸使用：每 100 升水体添加 <strong>5 毫升</strong>；<br>日常维护：每 100 升水体添加 <strong>2 毫升</strong>，每 1~2 周添加一次。</div>
+            <div class="en">Startup: add <strong>5 ml</strong> per 100 L of water.<br>Routine maintenance: add <strong>2 ml</strong> per 100 L every 1–2 weeks.</div>
+            <h4><span class="zh">贮藏方式</span><span class="en">Storage</span></h4>
+            <div class="zh">内含活菌制剂，需置于 <strong>2℃~5℃ 冷藏</strong>密封保存；开封后请在 <strong>180 天</strong>内使用完毕。</div>
+            <div class="en">Contains live bacteria — keep sealed and refrigerated at <strong>2–5℃</strong>. Use within <strong>180 days</strong> after opening.</div>
+            <h4><span class="zh">注意事项</span><span class="en">Precautions</span></h4>
+            <div class="zh">请存放在儿童和宠物无法触及的地方。</div>
+            <div class="en">Keep out of reach of children and pets.</div>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- 2 活性炭 -->
+    <article class="p-card" data-cat="water">
+      <div class="p-img"><img src="img/charcoal.jpg" alt="ReefMax Carbon"></div>
+      <div class="p-body">
+        <span class="p-cat"><span class="zh">水质管理</span><span class="en">Water Care</span></span>
+        <h2 class="p-name"><span class="zh">ReefMax 低磷活性炭</span><span class="en">ReefMax Carbon</span></h2>
+        <div class="p-spec">
+          <span><span class="zh">净含量 500ml</span><span class="en">Net 500 ml</span></span>
+        </div>
+        <p class="p-desc">
+          <span class="zh">专为海水与珊瑚礁水族箱优化。具有极低的磷酸盐析出和低灰分含量，同时不影响水族箱 pH 值；强效吸附，高效去除水中有机污染物，确保水质清澈、透明。</span>
+          <span class="en">Optimized for saltwater and reef aquariums. Extremely low phosphate leaching and low ash content, with no effect on aquarium pH. Powerful adsorption efficiently removes organic pollutants and keeps water clear and transparent.</span>
+        </p>
+        <details>
+          <summary><span class="zh">使用说明 / 注意事项</span><span class="en">Instructions / Precautions</span></summary>
+          <div class="detail-body">
+            <h4><span class="zh">使用说明</span><span class="en">Instructions</span></h4>
+            <div class="zh">日常维护：每 100 升水体添加 <strong>25 克（50 毫升）</strong>，10-15 天更换一次；<br>污染较重：每 100 升水体添加 <strong>50 克（100 毫升）</strong>，3-5 天更换一次。</div>
+            <div class="en">Routine maintenance: <strong>25 g (50 ml)</strong> per 100 L, replace every 10–15 days.<br>Heavy pollution: <strong>50 g (100 ml)</strong> per 100 L, replace every 3–5 days.</div>
+            <h4><span class="zh">注意事项</span><span class="en">Precautions</span></h4>
+            <div class="zh">请存放在儿童和宠物无法触及的地方，并置于干燥环境中。使用后拧紧瓶盖，确保长期保存和安全使用。</div>
+            <div class="en">Keep out of reach of children and pets and store in a dry place. Tighten the cap after use for long-term safe storage.</div>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- 3 盐度计 -->
+    <article class="p-card" data-cat="device">
+      <div class="p-img"><img src="img/salinity.jpg" alt="Professional Salinity Refractometer"></div>
+      <div class="p-body">
+        <span class="p-cat"><span class="zh">器材设备</span><span class="en">Equipment</span></span>
+        <h2 class="p-name"><span class="zh">专业级盐度折射仪</span><span class="en">Professional Salinity Refractometer</span></h2>
+        <div class="p-spec">
+          <span><span class="zh">光学测量</span><span class="en">Optical Reading</span></span>
+          <span><span class="zh">自动温度补偿</span><span class="en">Auto Temp. Compensation</span></span>
+          <span><span class="zh">LED 照明</span><span class="en">LED Illumination</span></span>
+        </div>
+        <p class="p-desc">
+          <span class="zh">专为海水水族精准校准。内置自动温度补偿，测量快准稳；高精度光学系统，读数清晰；一体式 LED 盖板，暗光环境亦可使用。</span>
+          <span class="en">Precisely calibrated for marine aquariums. Built-in automatic temperature compensation for fast, accurate and stable readings; high-precision optical system for clear results; integrated LED cover for use in low light.</span>
+        </p>
+        <details>
+          <summary><span class="zh">校准 / 使用说明 / 注意事项</span><span class="en">Calibration / Instructions / Precautions</span></summary>
+          <div class="detail-body">
+            <h4><span class="zh">校准</span><span class="en">Calibration</span></h4>
+            <div class="zh">滴 2-3 滴蒸馏水（或纯净水）于棱镜上，合盖后对准光源观察。若明暗分界线未落在 0 刻度处，用配套小螺丝刀轻轻旋转校准螺钉，直至分界线与 0 刻度重合。</div>
+            <div class="en">Place 2–3 drops of distilled (or purified) water on the prism, close the cover and aim at a light source. If the light/dark boundary does not fall on the 0 mark, gently turn the calibration screw with the supplied screwdriver until it aligns with 0.</div>
+            <h4><span class="zh">使用</span><span class="en">Operation</span></h4>
+            <div class="zh">掀开盖板，用滴管取 2-3 滴待测海水滴于棱镜测试面，轻轻合上盖板使液体均匀铺开、无气泡；将仪器前端对准光源，或按下 LED 灯板开关，从目镜端观察，明暗分界线对应的刻度即为盐度或比重值。<br>每次测量后请用清水冲洗棱镜并擦干，避免盐分结晶残留影响精度。</div>
+            <div class="en">Open the cover, place 2–3 drops of sample seawater on the prism with a pipette, close the cover and spread the liquid evenly without bubbles. Aim the front at a light source or press the LED switch, then read the scale at the light/dark boundary — that is the salinity or specific gravity.<br>Rinse the prism with clean water and dry after each measurement to avoid salt crystallisation affecting accuracy.</div>
+            <h4><span class="zh">注意事项</span><span class="en">Precautions</span></h4>
+            <div class="zh">请存放在儿童和宠物无法触及的地方。</div>
+            <div class="en">Keep out of reach of children and pets.</div>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- 4 小鱼缸 -->
+    <article class="p-card" data-cat="device">
+      <div class="p-img"><img src="img/aquarium.jpg" alt="Lanhai Nano Aquarium"></div>
+      <div class="p-body">
+        <span class="p-cat"><span class="zh">器材设备</span><span class="en">Equipment</span></span>
+        <h2 class="p-name"><span class="zh">蓝海小鱼缸</span><span class="en">Lanhai Nano Aquarium</span></h2>
+        <div class="p-spec">
+          <span><span class="zh">PC+ABS 材质</span><span class="en">PC + ABS Body</span></span>
+          <span><span class="zh">三色灯光</span><span class="en">Tri-color LED</span></span>
+          <span><span class="zh">自动补水</span><span class="en">Auto Top-off</span></span>
+        </div>
+        <p class="p-desc">
+          <span class="zh">整缸采用高强度 PC+ABS 材质，透明度高、抗冲击不易碎，小巧不占空间，适合办公桌、书桌摆放。整套配置齐全，开箱即用：缸体、过滤系统、三色灯光、3W 静音水泵、滤棉及自动补水瓶。</span>
+          <span class="en">Built from high-strength PC + ABS — highly transparent, impact-resistant and shatterproof, with a compact footprint for desks and workstations. Complete and ready out of the box: tank body, filtration system, tri-color LED lighting, 3 W silent pump, filter sponge and auto top-off bottle.</span>
+        </p>
+        <details>
+          <summary><span class="zh">产品详情</span><span class="en">Product Details</span></summary>
+          <div class="detail-body">
+            <h4><span class="zh">过滤与灯光</span><span class="en">Filtration &amp; Lighting</span></h4>
+            <div class="zh">内置过滤与水泵协同工作，持续循环水体并配合滤棉拦截杂质，有效维持水质清澈；5W 三色灯光支持<strong>白光、蓝光、白蓝</strong>三种模式切换，兼顾鱼类与珊瑚的日常光照需求，也能营造不同观赏氛围。</div>
+            <div class="en">The integrated filter works with the pump to keep water circulating, while the filter sponge traps debris and maintains clarity. The 5 W tri-color LED offers <strong>white, blue and white-blue</strong> modes, meeting daily lighting needs for fish and corals and creating different viewing atmospheres.</div>
+            <h4><span class="zh">自动补水</span><span class="en">Auto Top-off</span></h4>
+            <div class="zh">独有的自动补水功能可在水位下降时自动补充，避免因蒸发导致盐度上升，大幅降低日常维护频率。</div>
+            <div class="en">The unique auto top-off refills automatically as the water level drops, preventing salinity rise caused by evaporation and greatly reducing maintenance.</div>
+            <h4><span class="zh">适用场景</span><span class="en">Applications</span></h4>
+            <div class="zh">既能打造微型海水缸，轻松饲养小丑鱼与珊瑚；也能兼容淡水环境，饲养小型淡水鱼、虾螺与水草，是入门水族、桌面装饰与生态观察的理想之选。</div>
+            <div class="en">Ideal for a nano reef with clownfish and corals, and equally compatible with freshwater — small fish, shrimp, snails and aquatic plants. A perfect choice for beginners, desktop décor and ecological observation.</div>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- 5 珊瑚盐 -->
+    <article class="p-card" data-cat="salt">
+      <div class="p-img"><img src="img/coral_salt.jpg" alt="Reef Prime Reef Salt"></div>
+      <div class="p-body">
+        <span class="p-cat"><span class="zh">海盐配方</span><span class="en">Sea Salt</span></span>
+        <h2 class="p-name"><span class="zh">蓝海珊瑚盐</span><span class="en">Reef Prime Reef Salt</span></h2>
+        <div class="p-spec">
+          <span><span class="zh">净含量 25kg</span><span class="en">Net 25 kg</span></span>
+          <span><span class="zh">保质期 3 年</span><span class="en">Shelf Life 3 Years</span></span>
+        </div>
+        <p class="p-desc">
+          <span class="zh">科学配方还原天然海水的离子比例与微量元素构成。可精确控制盐度（比重 1.023-1.026，对应盐度 33-35‰），并补充足量钙、碱度与镁，微量元素配比均衡，适用于 SPS/LPS 珊瑚缸的开缸配水与日常换水。</span>
+          <span class="en">A scientifically formulated blend that restores the ionic ratio and trace-element profile of natural seawater. Precisely controls salinity (SG 1.023–1.026, 33–35‰) and supplies calcium, alkalinity and magnesium in balance — ideal for SPS/LPS reef tanks, from initial fill to routine water changes.</span>
+        </p>
+        <details>
+          <summary><span class="zh">使用说明 / 关键参数 / 贮藏 / 注意事项</span><span class="en">Instructions / Parameters / Storage / Precautions</span></summary>
+          <div class="detail-body">
+            <h4><span class="zh">关键参数</span><span class="en">Key Parameters</span></h4>
+            <div class="zh">钙 <strong>400-450 ppm</strong>；碱度 <strong>7-9 dKH</strong>；镁 <strong>1250-1350 ppm</strong>。</div>
+            <div class="en">Calcium <strong>400–450 ppm</strong>; alkalinity <strong>7–9 dKH</strong>; magnesium <strong>1250–1350 ppm</strong>.</div>
+            <h4><span class="zh">使用说明</span><span class="en">Instructions</span></h4>
+            <div class="zh">1. 准备适量的 RO 水或纯净水；<br>2. 将本品缓慢加入水中；<br>3. 充分搅拌，确保海盐完全溶解；<br>4. 使用盐度计测试盐度或比重。<br>纯鱼缸推荐盐度 <strong>32 PSU（比重 1.020）</strong>；珊瑚缸推荐盐度 <strong>35 PSU（比重 1.025）</strong>。</div>
+            <div class="en">1. Prepare the required amount of RO or purified water.<br>2. Slowly add the salt to the water.<br>3. Stir thoroughly until fully dissolved.<br>4. Test salinity or specific gravity with a refractometer.<br>Fish-only tanks: <strong>32 PSU (SG 1.020)</strong>; reef tanks: <strong>35 PSU (SG 1.025)</strong>.</div>
+            <h4><span class="zh">贮藏方式</span><span class="en">Storage</span></h4>
+            <div class="zh">密封存放于阴凉、干燥、通风处，避免阳光直射与高温潮湿。开封后及时扎紧袋口或转入密封桶，取用使用干燥洁净的工具。未开封保质期 3 年，建议开封后 6-12 个月内用完；轻微结块属正常现象，敲散后充分搅拌溶解即可。</div>
+            <div class="en">Store sealed in a cool, dry, ventilated place away from direct sunlight, heat and humidity. Reseal the bag or transfer to an airtight container after opening and use a dry, clean scoop. Unopened shelf life is 3 years; use within 6–12 months after opening. Slight caking is normal — break it up, stir and dissolve as usual.</div>
+            <h4><span class="zh">注意事项</span><span class="en">Precautions</span></h4>
+            <div class="zh">请存放在儿童和宠物无法触及的地方。</div>
+            <div class="en">Keep out of reach of children and pets.</div>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- 6 鱼盐 -->
+    <article class="p-card" data-cat="salt">
+      <div class="p-img"><img src="img/fish_salt.jpg" alt="Reef Prime Sea Salt"></div>
+      <div class="p-body">
+        <span class="p-cat"><span class="zh">海盐配方</span><span class="en">Sea Salt</span></span>
+        <h2 class="p-name"><span class="zh">蓝海鱼盐</span><span class="en">Reef Prime Sea Salt</span></h2>
+        <div class="p-spec">
+          <span><span class="zh">净含量 25kg</span><span class="en">Net 25 kg</span></span>
+          <span><span class="zh">保质期 3 年</span><span class="en">Shelf Life 3 Years</span></span>
+        </div>
+        <p class="p-desc">
+          <span class="zh">人工海盐通过科学配方模拟天然海水成分，含 60 多种微量元素与稳定离子比例，避免直接使用天然海水可能带来的微生物与重金属污染风险。可精确控制盐度（比重 1.020-1.025，对应盐度 30-35‰），确保鱼类生理稳定。</span>
+          <span class="en">Artificial sea salt scientifically formulated to simulate natural seawater, with 60+ trace elements and a stable ionic ratio — avoiding the microbial and heavy-metal contamination risks of natural seawater. Precisely controls salinity (SG 1.020–1.025, 30–35‰) to keep fish physiology stable.</span>
+        </p>
+        <details>
+          <summary><span class="zh">使用说明 / 贮藏 / 注意事项</span><span class="en">Instructions / Storage / Precautions</span></summary>
+          <div class="detail-body">
+            <h4><span class="zh">使用说明</span><span class="en">Instructions</span></h4>
+            <div class="zh">1. 准备适量的 RO 水或纯净水；<br>2. 将本品缓慢加入水中；<br>3. 充分搅拌，确保海盐完全溶解；<br>4. 使用盐度计测试盐度或比重。<br>纯鱼缸推荐盐度 <strong>32 PSU（比重 1.020）</strong>；珊瑚缸推荐盐度 <strong>35 PSU（比重 1.025）</strong>。</div>
+            <div class="en">1. Prepare the required amount of RO or purified water.<br>2. Slowly add the salt to the water.<br>3. Stir thoroughly until fully dissolved.<br>4. Test salinity or specific gravity with a refractometer.<br>Fish-only tanks: <strong>32 PSU (SG 1.020)</strong>; reef tanks: <strong>35 PSU (SG 1.025)</strong>.</div>
+            <h4><span class="zh">贮藏方式</span><span class="en">Storage</span></h4>
+            <div class="zh">密封存放于阴凉、干燥、通风处，避免阳光直射与高温潮湿。开封后及时扎紧袋口或转入密封桶，取用使用干燥洁净的工具。未开封保质期 3 年，建议开封后 6-12 个月内用完；轻微结块属正常现象，敲散后充分搅拌溶解即可。</div>
+            <div class="en">Store sealed in a cool, dry, ventilated place away from direct sunlight, heat and humidity. Reseal the bag or transfer to an airtight container after opening and use a dry, clean scoop. Unopened shelf life is 3 years; use within 6–12 months after opening. Slight caking is normal — break it up, stir and dissolve as usual.</div>
+            <h4><span class="zh">注意事项</span><span class="en">Precautions</span></h4>
+            <div class="zh">请存放在儿童和宠物无法触及的地方。</div>
+            <div class="en">Keep out of reach of children and pets.</div>
+          </div>
+        </details>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- 联系方式 -->
+  <section class="contact">
+    <div class="contact-left">
+      <div class="c-title">CONTACT</div>
+      <div class="c-name">Star Lee <span style="font-size:14px;color:#7a9b9b;font-weight:400;">李星星</span></div>
+      <div class="c-role"><span class="zh">业务总监</span><span class="en">Business Director</span></div>
+    </div>
+    <div class="contact-right">
+      <div class="row"><i>T</i><a href="tel:+8618666858830">+86 186 6685 8830</a></div>
+      <div class="row"><i>@</i><a href="mailto:sales@lanhai-marine.com">sales@lanhai-marine.com</a></div>
+      <div class="row"><i>W</i><a href="https://www.lanhai-marine.com" target="_blank" rel="noopener">www.lanhai-marine.com</a></div>
+      <div class="row"><i>A</i><span class="zh">广州市荔湾区龙溪蟠龙村 4-2 号</span><span class="en">No. 4-2 Longxi Panlong Village, Liwan District, Guangzhou, China</span></div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <p class="logo">LANHAI MARINE</p>
+    <p><span class="zh">广东蓝海海洋科技有限公司</span><span class="en">Guangdong Lanhai Marine Technology Co., Ltd.</span></p>
+    <p><span class="zh">两代人深耕海洋观赏生物领域 · 让海洋走进千家万户</span><span class="en">Two generations devoted to marine ornamental life · Bringing the ocean closer to every home</span></p>
+  </div>
+</div>
+
+<script>
+  // 语言切换
+  var langBtns = document.querySelectorAll('.lang-switch button');
+  langBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      langBtns.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      document.body.className = 'lang-' + b.dataset.lang;
+    });
+  });
+
+  // 分类筛选
+  var btns = document.querySelectorAll('#filter button');
+  var cards = document.querySelectorAll('.p-card');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      var cat = b.dataset.cat;
+      cards.forEach(function (c) {
+        c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'flex' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
