@@ -72,6 +72,26 @@
     color: #fff; background: rgba(13,148,136,0.35);
     border-color: rgba(20,184,166,0.5);
   }
+  .nav-official {
+    font-size: 13px; text-decoration: none; color: var(--teal-light);
+    padding: 6px 14px; border-radius: 18px;
+    border: 1px solid rgba(20,184,166,0.45); transition: .2s; white-space: nowrap;
+  }
+  .nav-official:hover { background: rgba(13,148,136,0.25); color: #fff; }
+  @media (max-width: 560px) {
+    .site-nav-inner { padding: 0 12px; gap: 6px; }
+    .nav-logo { font-size: 11px; letter-spacing: 1px; }
+    .nav-links a, .nav-official { font-size: 12px; padding: 5px 9px; }
+    .nav-right { gap: 6px; }
+    .lang-switch button { padding: 5px 9px; font-size: 11px; }
+  }
+  @media (max-width: 440px) {
+    .nav-logo { display: none; }
+    .site-nav-inner { justify-content: center; padding: 0 10px; }
+    .nav-links a, .nav-official { font-size: 11.5px; padding: 4px 8px; }
+    .nav-right { gap: 4px; }
+    .lang-switch button { padding: 4px 7px; font-size: 10px; }
+  }
 
   .topbar { display: flex; align-items: center; justify-content: space-between; padding: 22px 0 0; }
   .back {
@@ -208,6 +228,7 @@
         <a href="../"><span class="zh">开缸教程</span><span class="en">Guide</span></a>
         <a href="./" class="active"><span class="zh">产品中心</span><span class="en">Products</span></a>
       </div>
+      <a class="nav-official" href="https://lanhai-marine.com" target="_blank" rel="noopener"><span class="zh">官网</span><span class="en">Website</span> ↗</a>
       <div class="lang-switch">
         <button data-lang="zh" class="active">中文</button>
         <button data-lang="en">EN</button>
