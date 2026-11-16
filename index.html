@@ -444,6 +444,25 @@
     color: #fff; background: rgba(13,148,136,0.35);
     border-color: rgba(20,184,166,0.5);
   }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-official {
+    font-size: 13px; text-decoration: none; color: var(--teal-light);
+    padding: 6px 14px; border-radius: 18px;
+    border: 1px solid rgba(20,184,166,0.45); transition: .2s; white-space: nowrap;
+  }
+  .nav-official:hover { background: rgba(13,148,136,0.25); color: #fff; }
+  @media (max-width: 560px) {
+    .site-nav-inner { padding: 0 12px; gap: 6px; }
+    .nav-logo { font-size: 11px; letter-spacing: 1px; }
+    .nav-links a, .nav-official { font-size: 12px; padding: 5px 9px; }
+    .nav-right { gap: 6px; }
+  }
+  @media (max-width: 440px) {
+    .nav-logo { display: none; }
+    .site-nav-inner { justify-content: center; padding: 0 10px; }
+    .nav-links a, .nav-official { font-size: 11.5px; padding: 4px 8px; }
+    .nav-right { gap: 4px; }
+  }
 
   .progress-bar {
     position: fixed; top: 0; left: 0; height: 3px;
@@ -509,9 +528,12 @@
 <nav class="site-nav">
   <div class="site-nav-inner">
     <span class="nav-logo">LANHAI MARINE</span>
-    <div class="nav-links">
-      <a href="./" class="active">开缸教程</a>
-      <a href="./products/">产品中心</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="./" class="active">开缸教程</a>
+        <a href="./products/">产品中心</a>
+      </div>
+      <a class="nav-official" href="https://lanhai-marine.com" target="_blank" rel="noopener">官网 ↗</a>
     </div>
   </div>
 </nav>
